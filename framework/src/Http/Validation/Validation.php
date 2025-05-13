@@ -8,13 +8,10 @@ use TypeError;
 
 abstract class Validation
 {
-    //protected Request $request;
     protected array $rules = [];
     protected string $campo;
     protected mixed $valor;
     protected string|null $param;
-
-    //abstract public function setValor(mixed $valor);
 
     abstract public function validateType();
     
@@ -24,20 +21,22 @@ abstract class Validation
         $this->valor = $valor;
         $this->campo = $campo;
 
+        if($regras[0] == 'required'){
+            array_shift($regras);
+            $this->required();
+        }
     
         if(!$this->validateType()){
             $FailureMsg[] = ['campo'=> $this->campo, 'msg'=> 'O campo "'.$this->campo.'" não é compatível com o tipo escolhido.'];
             Fail::addMsg($FailureMsg);
             return;
         }
-        
 
-        //itera e chama as funções/regras do campo atual.
-        foreach($regras as $key => $funcR){
+        foreach($regras as $funcR){
             
             $funcaoRegra = $funcR;
-            $this->param = null;
-            
+            $this->param = null;//parâmetro da validação. NÃO É VALOR DO CAMPO.
+
             if(strpos($funcaoRegra, ':')){
                 list($funcaoRegra, $param) = explode(':', $funcR, 2);
                 $this->param = $param;
@@ -45,7 +44,6 @@ abstract class Validation
 
             $this->callValidator($funcaoRegra);
         }
-        
     }
 
     public function callValidator($funcaoRegra)
@@ -58,6 +56,13 @@ abstract class Validation
             echo 'Error: Função de validação inexistente: '.get_class($e).' - '.$e->getMessage().PHP_EOL;
             die();
         }
-        
+    }
+
+    private function required()
+    {
+        if($this->valor === '' ){
+            $FailureMsg[] = ['campo'=> $this->campo, 'msg'=>'O preenchimento de "'.$this->campo.'" é obrigatório.'];
+            Fail::addMsg($FailureMsg);
+        }
     }
 }

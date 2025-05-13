@@ -8,10 +8,11 @@ abstract class MixedValidation extends Validation
     abstract public function validateType();
 
     final public function required(){
-        if(($this->valor == null || trim($this->valor) == '' || $this->valor == []) && ($this->valor != "0")){
+        if($this->valor === '' ){
             $FailureMsg[] = ['campo'=> $this->campo, 'msg'=>'O preenchimento de "'.$this->campo.'" é obrigatório.'];
             Fail::addMsg($FailureMsg);
         }
     }
     
 }
+// && ($this->valor != "0")

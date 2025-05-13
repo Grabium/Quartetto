@@ -1,7 +1,7 @@
 <?php
 namespace Frmk\Http\Validation;
 
-use  Frmk\Http\Validation\FailureMessageValidation as Fail;
+use Frmk\Http\Validation\FailureMessageValidation as Fail;
 
 class NumberValidation extends MixedValidation
 {
@@ -24,5 +24,23 @@ class NumberValidation extends MixedValidation
 
         $this->valor = (float)$this->valor;
         return true;
+    }
+
+    public function min()
+    {
+        $param = (int)$this->param;
+        if($this->valor < $param){
+            $FailureMsg[] = ['campo: '=> $this->campo, 'msg'=>'O campo "'.$this->campo.'" não pode ser menor que '.$this->param.'.'];
+            Fail::addMsg($FailureMsg);
+        }
+    }
+
+    public function max()
+    {
+        $param = (int)$this->param;
+        if($this->valor > $param){
+            $FailureMsg[] = ['campo: '=> $this->campo, 'msg'=>'O campo "'.$this->campo.'" não pode ser maior que '.$this->param.'.'];
+            Fail::addMsg($FailureMsg);
+        }
     }
 }
