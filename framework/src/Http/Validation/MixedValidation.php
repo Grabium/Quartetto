@@ -1,7 +1,7 @@
 <?php
 namespace Frmk\Http\Validation;
 
-use  Frmk\Http\Validation\FailureMessageValidation as Fail;
+use Frmk\Http\Validation\FailureMessageValidation as Fail;
 
 abstract class MixedValidation extends Validation
 {
@@ -13,6 +13,4 @@ abstract class MixedValidation extends Validation
             Fail::addMsg($FailureMsg);
         }
     }
-    
 }
-// && ($this->valor != "0")

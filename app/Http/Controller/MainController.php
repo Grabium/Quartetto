@@ -13,7 +13,7 @@ class MainController extends Controller
 
     public function rotapost()
     {
-        (new MainValidation)->sendRules();
-        $failureMsgs = $this->response->send(['requisicao_original' => $this->request->all(), 'msg' => 'fluxo POST']);
+        $request = (new MainValidation)->validated();
+        $this->response->send(['requisicao_original' => $request, 'msg' => 'fluxo POST']);
     }
 }

@@ -23,7 +23,9 @@ abstract class Validation
 
         if($regras[0] == 'required'){
             array_shift($regras);
-            $this->required();
+            if(!$this->required()){
+                return;
+            }
         }
     
         if(!$this->validateType()){
@@ -58,11 +60,14 @@ abstract class Validation
         }
     }
 
-    private function required()
+    private function required(): bool
     {
         if($this->valor === '' ){
             $FailureMsg[] = ['campo'=> $this->campo, 'msg'=>'O preenchimento de "'.$this->campo.'" é obrigatório.'];
             Fail::addMsg($FailureMsg);
+            return false;
         }
+
+        return true;
     }
 }

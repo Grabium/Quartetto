@@ -5,8 +5,13 @@ class FailureMessageValidation
 {
     public static array $failuresMsgs = [];
 
-    public static function addMsg(array $FailureMsg){
+    public static function addMsg(array $FailureMsg)
+    {
         self::$failuresMsgs[] = $FailureMsg;
-        var_dump(self::$failuresMsgs);die();
+    }
+
+    public static function getMsgs(): array
+    {
+        return self::$failuresMsgs;
     }
 }

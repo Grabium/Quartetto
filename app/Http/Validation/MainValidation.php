@@ -7,7 +7,7 @@ class MainValidation extends ValidationAbstract implements ValidationInterface
     {
         return [
             'fator:int'    => 'required|min:-11|max:11',
-            'texto:string' => 'required|legal'
+            'texto:string' => 'required|min:1|max:50'
         ];
     }
 }

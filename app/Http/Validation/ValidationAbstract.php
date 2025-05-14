@@ -25,7 +25,18 @@ abstract class ValidationAbstract implements ValidationInterface
             }
             
         }
+    }
 
-        //return array de messages de falhas
+    public function validated(): array
+    {
+        $this->sendRules();
+
+        $msgs = \Frmk\Http\Validation\FailureMessageValidation::getMsgs();
+
+        if(count($msgs) == 0){
+            return (new \Frmk\Http\Request\Request)->all();
+        }
+
+        return $msgs;
     }
 }
